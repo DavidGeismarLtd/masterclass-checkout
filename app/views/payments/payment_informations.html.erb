@@ -1,0 +1,99 @@
+
+<div class="bg-white">
+  <div class="relative mx-auto grid max-w-7xl grid-cols-1 gap-x-16 lg:grid-cols-2 lg:px-8 lg:pt-16">
+    <h1 class="sr-only">Checkout</h1>
+
+    <section aria-labelledby="payment-and-shipping-heading" class="py-16 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:w-full lg:max-w-lg lg:pb-24 lg:pt-0">
+      <h2 id="payment-and-shipping-heading" class="sr-only">Payment informations</h2>
+      <form id="payment-form">
+        <div class="mx-auto max-w-2xl px-4 lg:max-w-none lg:px-0">
+          <img src="https://masterclassprepa.com/wp-content/uploads/2023/08/LOGO.webp" alt="" class="mb-2">
+          <div>
+            <h3 class="text-lg font-medium text-gray-900 mb-4">Informations de paiement</h3>
+            <div id="payment-element" class="w-full">
+              <!-- Elements will create form elements here -->
+            </div>
+          </div>
+          <button id="submit" class="mt-4 bg-masterclass-secondary rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm">S'abonner</button>
+        </div>
+        <div id="error-message">
+          <!-- Display error message to your customers here -->
+        </div>
+      </form>
+    </section>
+    <%= render 'pricing_details' %>
+    
+  </div>
+</div>
+
+<script>
+  let stripe_publishable_key = '<%= ENV['STRIPE_ENV'] == 'test' ? ENV['STRIPE_TEST_PUBLISHABLE_KEY'] :  ENV['STRIPE_LIVE_PUBLISHABLE_KEY'] %>'
+  const stripe = Stripe(stripe_publishable_key);
+  let clientSecret = '<%= params['clientSecret'] %>';
+        //   'masterclass-primary': '#C41618',
+        // 'masterclass-secondary': '#292929',
+  const appearance = {
+    theme: 'stripe',
+
+    variables: {
+      colorPrimary: '#292929', // Indigo-500 from TailwindCSS, for primary buttons and links
+      colorBackground: '#ffffff', // White background to match your form's aesthetic
+      colorText: '#374151', // Gray-700 from TailwindCSS, for primary text color
+      colorDanger: '#EF4444', // Red-500 from TailwindCSS, for errors and warnings
+      fontFamily: '"Inter var", sans-serif', // Inter is commonly used with TailwindCSS, you can adjust as needed
+      spacingUnit: '2px', // Keeping it tight, but you can adjust based on your form's spacing
+      borderRadius: '0.375rem', // Matches TailwindCSS's 'rounded-md' utility
+      // Add more customization variables as needed
+    },
+
+    rules: {
+      '.Input': {
+        boxShadow: '0 1px 2px 0 rgba(0, 0, 0, 0.05)', // TailwindCSS's shadow-sm
+        border: '1px solid #292929', // Matches TailwindCSS's border-gray-300
+        padding: '0.5rem 1rem', // Similar to TailwindCSS's p-2 (padding: 0.5rem;) but with a bit more horizontal padding
+      },
+      '.Input:focus': {
+        borderColor: '#292929', // Indigo-500 from TailwindCSS, for focus states
+        boxShadow: '0 0 0 3px rgba(79, 70, 229, 0.5)', // TailwindCSS's ring-2 ring-indigo-500 utility approximation
+      },
+      '.Label': {
+        fontSize: '0.875rem', // Matches TailwindCSS's text-sm font size
+        fontWeight: '500', // Semi-bold, similar to TailwindCSS's font-medium
+      },
+      // Add more rules for other elements as needed
+    }
+  };
+
+
+  // Set up Stripe.js and Elements to use in checkout form, passing the client secret obtained in step 5
+  const elements = stripe.elements({clientSecret, appearance});
+
+  // Create and mount the Payment Element
+  const paymentElement = elements.create('payment');
+  paymentElement.mount('#payment-element');
+  const form = document.getElementById('payment-form');
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    const {error} = await stripe.confirmPayment({
+      //`Elements` instance that was used to create the Payment Element
+      elements,
+      confirmParams: {
+        return_url: "<%= thank_you_url %>",
+      }
+    });
+
+    if (error) {
+      // This point will only be reached if there is an immediate error when
+      // confirming the payment. Show error to your customer (for example, payment
+      // details incomplete)
+      const messageContainer = document.querySelector('#error-message');
+      messageContainer.textContent = error.message;
+    } else {
+      // Your customer will be redirected to your `return_url`. For some payment
+      // methods like iDEAL, your customer will be redirected to an intermediate
+      // site first to authorize the payment, then redirected to the `return_url`.
+    }
+  });
+</script>

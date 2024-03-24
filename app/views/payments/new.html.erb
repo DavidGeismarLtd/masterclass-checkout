@@ -1,0 +1,118 @@
+
+<div class="bg-gray-50 ">
+  <div class="max-w-7xl mx-auto">
+    <div class="grid lg:grid-cols-2">
+      <div class="lg:col-span-1 max-w-2xl px-4 pb-24 pt-4 lg:pt-16 sm:px-6 lg:max-w-7xl lg:px-8">
+        <h2 class="sr-only">Checkout</h2>
+        <img src="https://masterclassprepa.com/wp-content/uploads/2023/08/LOGO.webp" alt="" class="mb-4">
+        <%= form_with model: @checkout_form, url: checkout_path, local: true, data: { turbo: false } do |form| %>
+          <%= form.hidden_field :price_id, value: params[:price_id] || (ENV['STRIPE_ENV'] == 'test' ? ENV['STRIPE_TEST_DEFAULT_PRICE'] : ENV['STRIPE_LIVE_DEFAULT_PRICE'] ) %>
+          <div>
+            <div>
+              <h2 class="text-lg font-medium text-gray-900">Information du payeur</h2>
+
+              <div class="mt-4">
+                <%= form.label :email, "Email", class: "block text-sm font-medium text-gray-700" %>
+                <div class="mt-1">
+                  <%= form.email_field :email, autocomplete: "email", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+                  <%= error_message_for(form, :email) %>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+              <div>
+                <%= form.label :phone, "Telephone", class: "block text-sm font-medium text-gray-700" %>
+                <div class="mt-1">
+                  <%= form.telephone_field :phone, autocomplete: "tel", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+                  <%= error_message_for(form, :phone) %>
+                </div>
+              </div>
+
+              <div>
+                <%= form.label :full_name, "Nom complet", class: "block text-sm font-medium text-gray-700" %>
+                <div class="mt-1">
+                  <%= form.text_field :full_name, autocomplete: "name", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+                  <%= error_message_for(form, :full_name) %>
+                </div>
+              </div>
+
+              <div class="sm:col-span-2">
+                <%= form.label :address, "Adresse", class: "block text-sm font-medium text-gray-700" %>
+                <div class="mt-1">
+                  <%= form.text_field :address, autocomplete: "street-address", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+                  <%= error_message_for(form, :address) %>
+                </div>
+              </div>
+
+              <div>
+                <%= form.label :city, "Ville", class: "block text-sm font-medium text-gray-700" %>
+                <div class="mt-1">
+                  <%= form.text_field :city, autocomplete: "address-level2", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+                  <%= error_message_for(form, :city) %>
+                </div>
+              </div>
+
+              <div>
+                <%= form.label :postal_code, "Code Postal", class: "block text-sm font-medium text-gray-700" %>
+
+                <div class="mt-1">
+                  <%= form.text_field :postal_code, autocomplete: "postal-code", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"%>
+                  <%= error_message_for(form, :postal_code) %>
+                </div>
+              </div>
+            </div>
+    
+
+            <div class="mt-10 border-t border-gray-200 pt-10">
+              <fieldset>
+                <legend class="text-lg font-medium text-gray-900">Information de l'étudiant</legend>
+
+                <div class="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+
+                <div class="sm:col-span-2">
+                  <%= form.label :student_full_name, "Nom complet", class: "block text-sm font-medium text-gray-700" %>
+                  <div class="mt-1">
+                    <%= form.text_field :student_full_name, autocomplete: "name", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+                    <%= error_message_for(form, :student_full_name) %>
+                  </div>
+                </div>
+
+                <div class="sm:col-span-2">
+                  <%= form.label :student_address, "Adresse", class: "block text-sm font-medium text-gray-700" %>
+                  <div class="mt-1">
+                    <%= form.text_field :student_address, autocomplete: "street-address", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+                    <%= error_message_for(form, :student_address) %>
+                  </div>
+                </div>
+
+                <div>
+                  <%= form.label :student_city, "Ville", class: "block text-sm font-medium text-gray-700" %>
+                  <div class="mt-1">
+                    <%= form.text_field :student_city, autocomplete: "address-level2", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+                    <%= error_message_for(form, :student_city) %>
+                  </div>
+                </div>
+
+                <div>
+                  <%= form.label :student_postal_code, "Code Postal", class: "block text-sm font-medium text-gray-700" %>
+
+                  <div class="mt-1">
+                    <%= form.text_field :student_postal_code, autocomplete: "postal-code", class: "block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"%>
+                    <%= error_message_for(form, :student_postal_code) %>
+                  </div>
+                </div>
+                </div>
+              </fieldset>
+              <div class="mt-10 flex justify-end ">
+                <%= form.submit "Valider", class: "cursor-pointer  bg-masterclass-secondary rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="order-first lg:order-last lg:col-span-1 w-full px-4 lg:pb-24 lg:pt-16 sm:px-6 lg:max-w-7xl lg:px-8 flex lg:items-center lg:justify-center">
+        <%= render "pricing_details" %>
+      </div>
+    </div>
+  </div>
+</div>

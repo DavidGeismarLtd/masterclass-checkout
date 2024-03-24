@@ -1,0 +1,45 @@
+# Files in the config/locales directory are used for internationalization and
+# are automatically loaded by Rails. If you want to use locales other than
+# English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t "hello"
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t("hello") %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more about the API, please read the Rails Internationalization guide
+# at https://guides.rubyonrails.org/i18n.html.
+#
+# Be aware that YAML interprets the following case-insensitive strings as
+# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
+# must be quoted to be interpreted as strings. For example:
+#
+#     en:
+#       "yes": yup
+#       enabled: "ON"
+
+fr:
+  hello: "Hello world"
+  activemodel:
+    attributes:
+      checkout_informations_form:
+        email: Email
+        city: Ville
+        phone: Téléphone
+        full_name: Nom complet
+        address: Addresse
+        postal_code: Code postal
+        student_full_name: Nom complet de l'étudiant
+        student_address: Addresse de l'étudiant
+        student_city: Ville de l'étudiant
+        student_postal_code: Code postal de l'étudiant
+

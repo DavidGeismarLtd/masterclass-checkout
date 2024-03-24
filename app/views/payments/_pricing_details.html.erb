@@ -1,0 +1,44 @@
+<div class="rounded-3xl p-8 ring-1 xl:p-10 ring-gray-200 bg-masterclass-primary text-white w-full">
+  <h3 id="tier-startup" class="text-lg font-semibold leading-8"><%= stripe_product.name %></h3>
+  <p class="mt-4 text-sm leading-6"><%= stripe_product.description %></p>
+  <p class="mt-6 flex items-baseline gap-x-1">
+    <!-- Price, update based on frequency toggle state -->
+    <span class="text-4xl font-bold tracking-tight">€<%=  stripe_price_details[:unit_amount]/100 %></span>
+    <!-- Payment frequency, update based on frequency toggle state -->
+    <% if  stripe_price_details[:recurring] %>
+      <span class="text-sm font-semibold leading-6">/ <%= interval(stripe_price_details[:recurring][:interval]) %> </span>
+    <% end %>
+  </p>
+  <ul role="list" class="mt-8 space-y-3 text-sm leading-6 xl:mt-10 bg-masterclass-accent p-4 rounded hidden lg:block">
+    <li class="flex gap-x-3">
+      <svg class="h-6 w-5 flex-none text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+      </svg>
+      Des fiches de cours synthétiques et des fiches méthodologiques exhaustives
+    </li>
+    <li class="flex gap-x-3">
+      <svg class="h-6 w-5 flex-none text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+      </svg>
+      Des vidéos d’explication par le meilleur professeur de maths de ces 30 dernières années
+    </li>
+    <li class="flex gap-x-3">
+      <svg class="h-6 w-5 flex-none text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+      </svg>
+      Tous les exercices essentiels d’application directe du cours
+    </li>
+    <li class="flex gap-x-3">
+      <svg class="h-6 w-5 flex-none text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+      </svg>
+      Tous les résultats les plus importants à maîtriser en vue des concours
+    </li>
+    <li class="flex gap-x-3">
+      <svg class="h-6 w-5 flex-none text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+      </svg>	
+      Un accès et une assistance 24/24 7/7 à notre plateforme digitale
+    </li>
+  </ul>
+</div>
